@@ -127,7 +127,11 @@ def leeGraphML(file):
     for e in g.edges():
        source = e.node1
        target = e.node2
-       E.append((source['label'], target['label'], float(e['d1'])))
+       try:
+           peso = float(e['d1'])
+       except:
+            peso = None 
+       E.append((source['label'], target['label'], peso))
 
     return (V,E)
  
