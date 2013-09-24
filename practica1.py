@@ -58,29 +58,59 @@ def listaAIncidencia(grafoLista):
     matriz = []
     esta = 0
 
-    for i in V:
+    for v in V:
         aux = []
-        for j in E:
-           esta = int(j[0] == i or j[1] == i)
-           aux.append(esta)
+        for a in E:
+#           esta = int(j[0] == i or j[1] == i)
+            if v in a:
+                if v == a[0] and v == a[1]:
+                    aux.append(2)
+                elif v == a[0]:
+                    aux.append(-1)
+                else:
+                    aux.append(1)
+            else:
+                aux.append(0)          
         matriz.append(aux)
 
-    return matriz
+    return (matriz, V)
  
 def incidenciaALista(grafoIncidencia):
     '''
     Transforma un grafo representado una matriz de incidencia a su 
     representacion por listas.
     '''
-    pass
+    matriz = grafoIncidencia[0]
+    V = grafoIncidencia[1]
+    
+    E = []
+    aux = []
+    
+    for j in range(len(matriz[0])):
+        for i, v in enumerate(V):
+            if matriz[i][j] == -1:
+                aux.insert(0, v)
+            elif matriz[i][j] == 1:
+                aux.append(v)
+            elif matriz[i][j] == 2:
+                aux = [v,v]
+        
+        E.append(tuple(aux))
 
-
+    return E
+                
+        
 def imprimeGrafoIncidencia(grafoIncidencia):
     '''
     Muestra por pantalla un grafo. 
     El argumento esta en formato de matriz de incidencia.
     '''
-    pass
+    matriz = grafoIncidencia[0]
+    V = grafoIncidencia[1]
+
+    for i,fila in enumerate(matriz):
+        print fila,V[i]
+
 
 
 def listaAAdyacencia(grafoLista):
@@ -171,17 +201,20 @@ def leerGrafoArchivo(file):
 
 def main():
 
-#   grafo = leerGrafoStdin()
-#    print grafo
+#    grafo = leerGrafoStdin()
 #    imprimeGrafoLista(grafo)
    
-#    listaAIncidencia(grafo)
-#    matriz = listaAAdyacencia(grafo)
+ #    matriz = listaAAdyacencia(grafo)
 #    grafo2= adyacenciaALista(matriz)
 #    imprimeGrafoLista(grafo2)
-#    grafo = leerGrafoArchivo("grafo.txt")
-#    print grafo
-    pass
+    grafo = leerGrafoArchivo("grafo2.txt")
+    print grafo
+
+    inc = listaAIncidencia(grafo)
+    imprimeGrafoIncidencia(inc)
+    grafo = incidenciaALista(inc)
+    print grafo
 
 if __name__ == "__main__":
     main()
+

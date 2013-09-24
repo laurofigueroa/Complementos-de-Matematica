@@ -16,9 +16,8 @@ def set(lista):
     a ser conjuntos unitarios. 
     Retorna un disjointSet
     '''
-    dijointSet = dict([(i,x) for x, i in enumerate(lista) ])
-    return dijointSet
-
+    return dict([(i,x) for x, i in enumerate(lista) ])
+    
 def find(elem, disjointSet):
     '''
     Obtiene el identificador correspondiente al conjunto al que pertenece 
@@ -39,11 +38,13 @@ def union(id1, id2, disjointSet):
     for clave, valor in disjointSet.iteritems():
         if id1 == valor:
             disjointSet[clave] = id2
-            return disjointSet
-        elif id2 == valor:
-            disjointSet[clave] = id1
-            return disjointSet
-    print "ERROR - Alguna de las claves ingresados no se encuentra en disjointSet"
+            
+
+#            return disjointSet
+#        elif id2 == valor:
+#           disjointSet[clave] = id1
+#            return disjointSet
+#    print "ERROR - Alguna de las claves ingresados no se encuentra en disjointSet"
 
 def componentesConexas(grafoLista):
     '''
@@ -66,7 +67,7 @@ def componentesConexas(grafoLista):
 def main():
     leerGrafoArchivo = practica1.leerGrafoArchivo
 
-    grafoLista = leerGrafoArchivo("grafo.txt")
+    grafoLista = leerGrafoArchivo("grafo2.txt")
     print grafoLista
 #    dis = set(grafoLista[0])
 #    print dis
@@ -83,3 +84,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
