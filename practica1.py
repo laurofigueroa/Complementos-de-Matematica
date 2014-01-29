@@ -90,14 +90,14 @@ def incidenciaALista(grafoIncidencia):
         for i, v in enumerate(V):
             if matriz[i][j] == -1:
                 aux.insert(0, v)
-            elif matriz[i][j] == 1:
+            if matriz[i][j] == 1:
                 aux.append(v)
-            elif matriz[i][j] == 2:
-                aux = [v,v]
-        
-        E.append(tuple(aux))
-
-    return E
+            if matriz[i][j] == 2:
+                aux = [v,v] 
+        if aux != []:
+          E.append(tuple(aux))
+          aux = []
+    return (V,E)
                 
         
 def imprimeGrafoIncidencia(grafoIncidencia):
@@ -126,7 +126,10 @@ def listaAAdyacencia(grafoLista):
     for i in V:
         aux = []
         for j in V:
-	    aux.append(int((i,j) in E))
+          if (int((i,j) in E)) or (int((j,i) in E)):
+            aux.append(int('1'))
+          else:
+            aux.append(int('0'))
         matriz.append(aux)           
     return (matriz,V)
 
@@ -143,7 +146,8 @@ def adyacenciaALista(grafoAdyacencia):
     for i in range(size):
         for j in range(size):
             if matriz[i][j] == 1:
-                E.append((V[i], V[j]))            
+              if not((V[j], V[i]) in E):
+                    E.append((V[i], V[j]))            
     return (V,E)
 
 
@@ -153,7 +157,23 @@ def imprimeGrafoAdyacencia(grafoAdyacencia):
     Muestra por pantalla un grafo. 
     El argumento esta en formato de matriz de adyacencia.
     '''
-    pass
+    matriz = grafoAdyacencia[0]
+    V = grafoAdyacencia[1]
+
+    size = len(V)
+    tmp = size
+
+    print (""),
+    while size > 0:
+        print V[tmp - size], "",
+        size = size - 1
+    print('')
+
+    size = tmp
+    while size > 0:
+        # print matriz[size-tmp-1], V[size-1]
+        print matriz[tmp - size], V[tmp - size]
+        size = size - 1
 
 
 def leerGrafoArchivo(file):
@@ -180,14 +200,10 @@ def leerGrafoArchivo(file):
 
     for i in range(vertices):
         line = entrada.readline()[:-1]
-#        print "Este es [" + line + "]"
         V.append(line)
     
     while(True):
         line = entrada.readline()[:-1]
-#           print "Este es [" + line + "]"
-#      		E.append((line.split(' ')))
-#            print "Este es " + str(line)
         aux = (line.split(' '))
         if (len(aux) < 2):
             break
@@ -204,17 +220,22 @@ def main():
 #    grafo = leerGrafoStdin()
 #    imprimeGrafoLista(grafo)
    
- #    matriz = listaAAdyacencia(grafo)
-#    grafo2= adyacenciaALista(matriz)
-#    imprimeGrafoLista(grafo2)
     grafo = leerGrafoArchivo("grafo2.txt")
     print grafo
 
-    inc = listaAIncidencia(grafo)
-    imprimeGrafoIncidencia(inc)
-    grafo = incidenciaALista(inc)
-    print grafo
+    # Adyacencia #
+    print "Grafo original", grafo
+    matriz = listaAAdyacencia(grafo)
+    imprimeGrafoAdyacencia(matriz)
+    g = adyacenciaALista(matriz)
+    print g
 
+    # Incidencia #
+    print "Grafo original", grafo
+    ady = listaAIncidencia(grafo)
+    imprimeGrafoIncidencia(ady)
+    g2 = incidenciaALista(ady)
+    print g2
 if __name__ == "__main__":
     main()
 

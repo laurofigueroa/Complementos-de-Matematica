@@ -57,23 +57,24 @@ class LayoutGraph():
 
     def randomize(self):
         ''' Inicializa en forma aleatoria las posiciones de los nodos'''
+        for v in V:
+            posiciones[str(v)] = (random(), random())
 
-        pass
+        for e in E:
+            fuerzas[str(e)] = random()
+        
 
     def step(self):
         ''' Efectua un paso de la simulacion fisica y actualiza las posiciones de los nodos en gr'''
         # Calcular repulsiones de nodos (actualiza fuerzas)
         # Calcular atracciones de aristas (actualiza fuerzas)
         # En base a fuerzas, actualizar posiciones, setear fuerzas a cero
-        pass
-
         for v in V:
             # Cada vertice tine dos vectores: .pos y .disp 
-            v.disp = Vector(0,0)
             for u in V:
                 if u != v:
                     # Delta es la diferencia entre los 2 vertices
-                    delta = Vector(v.pos.x - u.pos.y, v.pos.y - u.pos.y) # Resto coordenadas 
+                    delta = (posiciones[v][0] - posiciones[u][0], posiciones[v][1] - posiciones[u][1]) # Resto coordenadas 
 
                     # v.disp = v.disp + delta/norma(delta) * fr(norma(delta))
                     disp.x = v.disp.x + delta.x/norma(delta)* fr(norma(delta))
