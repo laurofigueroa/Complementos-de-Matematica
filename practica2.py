@@ -51,7 +51,7 @@ def componentesConexas(grafoLista):
     Dado un grafo en representacion de lista, obtiene sus componentes conexas
     '''
     disjointSet = set (grafoLista[0])
-    print disjointSet
+#    print disjointSet
     aristas = grafoLista[1]
 
     for a in aristas:

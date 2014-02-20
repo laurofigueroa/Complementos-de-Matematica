@@ -31,37 +31,21 @@ def dijkstra2(grafo, vertice):
   cola = grafo[0] 
 
   while cola != []:
-    # minimo de dist 
-#    minimo = (None, None)
-#    for v in cola:
-#      for tupla in dist.items():
-#        print tupla
-#        if tupla[1] != None and minimo[1] == None:
-#          minimo = tupla
-#        if tupla[1] < minimo[1] and tupla[1] != None:
-#          minimo = tupla
     minimo = (None, None)
     for tupla in dist.items():
-#      print minimo
       if minimo[1] == None and tupla[1] != None and tupla[0] in cola:
         minimo = tupla
       elif minimo[1] != None and tupla[1] != None and minimo[1] > tupla[1] and tupla[0] in cola:
         minimo = tupla
 
-#    print minimo    
     u = minimo[0] #vertice
     cola.remove(u)
-#    print "----------> u = ", u 
-#    print "dist[u] = ", dist[u]
-#    print "cola = ", cola
 
     if dist[u] == None:
       break
   
-#    print "adyacentes a u ",adyacentes(grafo[1],cola,u)
-#    print "dist "
-#    print dist
-    for v in adyacentes(grafo[1], cola, u):
+    vecinos = adyacentes(grafo[1], cola, u) 
+    for v in vecinos:
       alt = dist[u] + peso(grafo[1], v, u)
       if dist[v] == None:
         dist[v] = alt
@@ -69,11 +53,6 @@ def dijkstra2(grafo, vertice):
       if (alt < dist[v]):
         dist[v] = alt
         padre[v] = u
-    #   cola.remove(u)
-#    print "dist actualizada"
-#    print dist
-#    print "cola = ", cola
-#    print "_______ FIN ________"
 
   return (dist, padre)
 
@@ -94,6 +73,8 @@ def adyacentes(E, vertices, vertice): #devuelve una lista de vetices adyacentes
         res.append(e[0])
 
   return res
+
+
 
 def main():
 

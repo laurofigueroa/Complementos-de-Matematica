@@ -5,6 +5,7 @@
 # Consigna: Implementar los siguientes metodos
 
 from practica3 import*
+from practica2 import*
 
 def prim(grafo):
   '''
@@ -62,6 +63,7 @@ def kruskal(grafo):
   E = grafo[1]
   disjoinSet = set(grafo[0])
 
+  # Ordeno las aristas
   while True:
     ordenado = 1
     for i in range(len(E)-1):
@@ -76,20 +78,26 @@ def kruskal(grafo):
   for e in E:
     if disjoinSet[e[0]] != disjoinSet[e[1]]:
       sol.append(e)
+      union(find(e[0],disjoinSet), find(e[1], disjoinSet), disjoinSet) 
 
   return sol
 
 def main():
 
+  print "Prim - ejemplo 1"
   g = leeGraphML("myGraph.graphml")
-  print g
+  print "Grafo original", g
   aristas = prim(g)
   print aristas
+
+  print "Prim - ejemplo 2"
   g = leerGrafoPesoArchivo("grafo3.txt")
-  print g
+  print "Grafo original", g
   aristas = prim(g)
   print aristas
   
+  print "Kruscal"
+  print "Grafo original", g
   aristas = kruskal(g)
   print aristas
 
