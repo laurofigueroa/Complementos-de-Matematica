@@ -15,19 +15,22 @@ def dijkstra(grafo, vertice):
   '''
   pass
 
-def dijkstra2(grafo, vertice):
+def dijkstra1(grafo, vertice):
   '''
   Dado un grafo (en formato de listas con pesos), aplica el algoritmo de 
   Dijkstra para hallar el CAMINO mas corto desde el vertice de origen
   a cada uno del resto de los vertices.
   '''
+  
+def dijkstra2(grafo, vertice):
   dist = {}
   padre = {}
   for v in grafo[0]:
     dist[v] = None
     padre[v] = None
+  
+  V = grafo[0][:]
   dist[vertice] = 0
-
   cola = grafo[0] 
 
   while cola != []:
@@ -54,7 +57,21 @@ def dijkstra2(grafo, vertice):
         dist[v] = alt
         padre[v] = u
 
-  return (dist, padre)
+  # Reconstruyo los caminos
+  caminos = []
+  for v in V:
+    aux = []
+    if v != vertice:
+      aux.append(v)
+      while v != vertice:
+        aux.append(padre[v])
+        v = padre[v]
+      aux.reverse()
+      caminos.append(aux)
+    
+  return (dist, padre, caminos)
+
+  
 
 
 def peso(E, v1, v2):
@@ -79,7 +96,6 @@ def adyacentes(E, vertices, vertice): #devuelve una lista de vetices adyacentes
 def main():
 
   g = leerGrafoPesoArchivo("grafo5.txt")
-  print g
   res = dijkstra2(g, '1')
   print res
 
